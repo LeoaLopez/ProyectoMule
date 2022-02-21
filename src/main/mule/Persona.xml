@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="get:\personas:leolopez_xpersona-config">
+		<http:request method="GET" doc:name="GetPerson" doc:id="d67b1ed9-f1e9-4397-82ff-e3555846193b" config-ref="HTTP_Request_configuration" path="/personas">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	promedio : attributes.queryParams.promedio
+}]]]></http:query-params>
+		</http:request>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="cadb6932-231a-47b9-bfa2-af57a338ddf5" type="ANY"/>
+		</error-handler>
+    
+</flow>
+    <flow name="delete:\personas:leolopez_xpersona-config">
+        <http:request method="DELETE" doc:name="DeletePerson" doc:id="784da9f9-36bf-4717-8c6c-846bb344c1bd" config-ref="HTTP_Request_configuration" path="/personas"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="4b059d76-638d-42ba-8d66-ed92eac33c3b" type="ANY"/>
+		</error-handler>
+    
+</flow>
+    <flow name="post:\personas:application\json:leolopez_xpersona-config">
+        <http:request method="POST" doc:name="PostPerson" doc:id="dbf2d034-6d0e-4052-86fd-d99b5f646852" config-ref="HTTP_Request_configuration" path="/personas"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="05236263-692c-430c-a972-4a9d80171cd9" type="ANY"/>
+		</error-handler>
+    
+</flow>
+    <flow name="get:\personas\(id):leolopez_xpersona-config">
+        <set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="7f3bf628-77c9-4d7a-acc9-c22e28a20c18" variableName="variableID"/>
+		<http:request method="GET" doc:name="GetPersonById" doc:id="e6441605-7b27-4cab-9bcb-49e9284a0bc1" config-ref="HTTP_Request_configuration" path="/personas/{id}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	id : vars.variableID
+}]]]></http:uri-params>
+		</http:request>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="83497e3b-9b53-4fb9-9b05-ea970103deda" type="ANY"/>
+		</error-handler>
+    
+</flow>
+    <flow name="patch:\personas:application\json:leolopez_xpersona-config">
+        <http:request method="PATCH" doc:name="PatchPerson" doc:id="d0b00f9b-b752-4be0-b83c-1b39bf59e781" config-ref="HTTP_Request_configuration" path="/personas"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="e813f33b-c489-40b2-a3fe-0b4971640ede" type="ANY"/>
+		</error-handler>
+    
+</flow>
+</mule>
